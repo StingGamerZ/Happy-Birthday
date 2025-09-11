@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Abhay 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: gold;
+      font-family: Impact, Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    #dumbbell {
+      font-size: 80px;
+      margin-top: 80px;
+      animation: flash 1s infinite;
+    }
+
+    @keyframes flash {
+      0% { color: red; }
+      50% { color: gold; }
+      100% { color: red; }
+    }
+
+    #line {
+      font-size: 48px;
+      margin-top: 60px;
+      transition: opacity 1s ease-in-out;
+    }
+
+    #start-btn {
+      margin-top: 50px;
+      padding: 15px 30px;
+      font-size: 22px;
+      font-weight: bold;
+      background: gold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: black;
+      transition: transform 0.2s;
+    }
+
+    #start-btn:hover {
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body>
+  <div id="dumbbell">💪</div>
+  <div id="line"></div>
+  <button id="start-btn">▶ Play Music</button>
+
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="happy_birthday.mp3" type="audio/mpeg" />
+  </audio>
+
+  <script>
+    const lines = [
+      "Power, Strength, Dedication — that's Abhay 💪",
+      "Today the strongest soul I know grows stronger.",
+      "Happy Birthday, Bro! 🎉🎂",
+      "Stay fit, stay powerful, stay unstoppable!"
+    ];
+
+    let index = 0;
+    const lineDiv = document.getElementById("line");
+    const music = document.getElementById("bg-music");
+    const startBtn = document.getElementById("start-btn");
+
+    function showLine() {
+      lineDiv.style.opacity = 0; // fade out
+      setTimeout(() => {
+        lineDiv.textContent = lines[index];
+        lineDiv.style.opacity = 1; // fade in
+      }, 500);
+      index = (index + 1) % lines.length; // loop
+    }
+
+    function startShow() {
+      music.play(); // play background music
+      startBtn.style.display = "none"; // hide button
+      showLine();
+      setInterval(showLine, 3000);
+    }
+
+    startBtn.addEventListener("click", startShow);
+  </script>
+</body>
+</html>
