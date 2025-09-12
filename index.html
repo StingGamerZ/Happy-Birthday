@@ -1,238 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Birthday Nikhil 🎉</title>
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    background: black;
-    color: gold;
-    font-family: Impact, Arial, sans-serif;
-    text-align: center;
-    overflow: hidden;
-  }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday Abhay 🎉</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      color: gold;
+      font-family: Impact, Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
 
-  #timer {
-    font-size: 60px;
-    margin-top: 100px;
-    color: white;
-    animation: blink 1s infinite;
-  }
+    #dumbbell {
+      font-size: 80px;
+      margin-top: 80px;
+      animation: flash 1s infinite;
+    }
 
-  @keyframes blink {
-    0%, 50%, 100% { opacity: 1; }
-    25%, 75% { opacity: 0; }
-  }
+    @keyframes flash {
+      0% { color: red; }
+      50% { color: gold; }
+      100% { color: red; }
+    }
 
-  #music-btn {
-    margin-top: 30px;
-    padding: 12px 25px;
-    font-size: 20px;
-    font-weight: bold;
-    background: gold;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    color: black;
-    transition: transform 0.2s;
-  }
+    #line {
+      font-size: 48px;
+      margin-top: 60px;
+      transition: opacity 1s ease-in-out;
+    }
 
-  #music-btn:hover {
-    transform: scale(1.1);
-  }
+    #start-btn {
+      margin-top: 50px;
+      padding: 15px 30px;
+      font-size: 22px;
+      font-weight: bold;
+      background: gold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      color: black;
+      transition: transform 0.2s;
+    }
 
-  /* Hidden by default */
-  #animation, #bash {
-    display: none;
-  }
-
-  #dumbbell {
-    font-size: 80px;
-    margin-top: 40px;
-    animation: flash 1s infinite;
-  }
-
-  @keyframes flash {
-    0% { color: red; }
-    50% { color: gold; }
-    100% { color: red; }
-  }
-
-  #line {
-    font-size: 42px;
-    margin-top: 40px;
-    opacity: 0;
-    transition: opacity 1s ease-in-out;
-  }
-
-  #bash {
-    font-size: 70px;
-    color: red;
-    margin-top: 80px;
-    animation: boom 0.8s infinite;
-  }
-
-  @keyframes boom {
-    0% { transform: scale(1); color: red; }
-    50% { transform: scale(1.5); color: gold; }
-    100% { transform: scale(1); color: red; }
-  }
-
-  canvas {
-    position: fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    pointer-events: none;
-  }
-</style>
+    #start-btn:hover {
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 <body>
-
-<div id="timer">10</div>
-<button id="music-btn">▶ Play Music</button>
-
-<div id="animation">
-  <div id="dumbbell">💪🤪😎</div>
+  <div id="dumbbell">💪</div>
   <div id="line"></div>
-</div>
+  <button id="start-btn">▶ Play Music</button>
 
-<div id="bash">🎉🔥 HAPPY BIRTHDAY NIKHIL 🔥🎉</div>
+  <!-- Background Music -->
+  <audio id="bg-music" loop>
+    <source src="happy_birthday.mp3" type="audio/mpeg" />
+  </audio>
 
-<audio id="bg-music" loop>
-  <source src="happy_birthday.mp3" type="audio/mpeg">
-</audio>
+  <script>
+    const lines = [
+      "Power, Strength, Dedication — that's Abhay 💪",
+      "Today the strongest soul I know grows stronger.",
+      "Happiest birthday ABHU 🎂 🌷🤍",
+      "Stay fit, stay powerful, stay unstoppable!"
+    ];
 
-<canvas id="confetti"></canvas>
+    let index = 0;
+    const lineDiv = document.getElementById("line");
+    const music = document.getElementById("bg-music");
+    const startBtn = document.getElementById("start-btn");
 
-<script>
-  const lines = [
-    "Fun, Enjoy, Masti — that's Nikhil 💪",
-    "Bhai Birthday He Tera Aaj Enjoy Kr!",
-    "Happy Birthday, Bhai! 🎉🎂",
-    "Stay fit, stay powerful, stay unstoppable!"
-  ];
-
-  let index = 0;
-  const lineDiv = document.getElementById("line");
-  const music = document.getElementById("bg-music");
-  const timerDiv = document.getElementById("timer");
-  const animationDiv = document.getElementById("animation");
-  const bashDiv = document.getElementById("bash");
-  const musicBtn = document.getElementById("music-btn");
-
-  let timerInterval, lineInterval;
-
-  // Music toggle
-  musicBtn.addEventListener("click", () => {
-    if (music.paused) {
-      music.play();
-      musicBtn.textContent = "⏸ Pause Music";
-    } else {
-      music.pause();
-      musicBtn.textContent = "▶ Play Music";
+    function showLine() {
+      lineDiv.style.opacity = 0; // fade out
+      setTimeout(() => {
+        lineDiv.textContent = lines[index];
+        lineDiv.style.opacity = 1; // fade in
+      }, 500);
+      index = (index + 1) % lines.length; // loop
     }
-  });
 
-  // Countdown
-  function startCountdown() {
-    let timeLeft = 10;
-    timerInterval = setInterval(() => {
-      timerDiv.textContent = timeLeft;
-
-      if(timeLeft <= 0){
-        clearInterval(timerInterval);
-        triggerAnimation();
-      }
-      timeLeft--;
-    },1000);
-  }
-
-  // Show line with fade
-  function showLine() {
-    lineDiv.style.opacity = 0;
-    setTimeout(() => {
-      lineDiv.textContent = lines[index];
-      lineDiv.style.opacity = 1;
-    }, 500);
-    index = (index+1) % lines.length;
-  }
-
-  // Trigger animation
-  function triggerAnimation() {
-    timerDiv.style.display = "none";
-    animationDiv.style.display = "block";
-    showLine();
-    lineInterval = setInterval(showLine, 3000);
-
-    const totalTime = lines.length * 3000;
-    setTimeout(() => {
-      animationDiv.style.display = "none";
-      bashDiv.style.display = "block";
-      clearInterval(lineInterval);
-      startConfetti();
-    }, totalTime);
-  }
-
-  // Confetti Effect
-  const canvas = document.getElementById('confetti');
-  const ctx = canvas.getContext('2d');
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const confettiPieces = [];
-  const confettiCount = 150;
-
-  function random(min,max){ return Math.random()*(max-min)+min; }
-
-  function initConfetti(){
-    for(let i=0;i<confettiCount;i++){
-      confettiPieces.push({
-        x: random(0,canvas.width),
-        y: random(-canvas.height,0),
-        r: random(5,15),
-        d: random(2,5),
-        color: `hsl(${Math.floor(random(0,360))},100%,50%)`,
-        tilt: random(-10,10),
-        tiltAngleIncrement: random(0.05,0.12),
-        tiltAngle: 0
-      });
+    function startShow() {
+      music.play(); // play background music
+      startBtn.style.display = "none"; // hide button
+      showLine();
+      setInterval(showLine, 3000);
     }
-  }
 
-  function drawConfetti(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    confettiPieces.forEach(p=>{
-      ctx.beginPath();
-      ctx.lineWidth = p.r;
-      ctx.strokeStyle = p.color;
-      ctx.moveTo(p.x + p.tilt + p.r/2, p.y);
-      ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r/2);
-      ctx.stroke();
-
-      p.tiltAngle += p.tiltAngleIncrement;
-      p.y += (Math.cos(p.tiltAngle) + p.d)/2;
-      p.tilt = Math.sin(p.tiltAngle) * 15;
-
-      if(p.y > canvas.height) {
-        p.y = random(-20,0);
-        p.x = random(0,canvas.width);
-      }
-    });
-    requestAnimationFrame(drawConfetti);
-  }
-
-  function startConfetti(){
-    initConfetti();
-    drawConfetti();
-  }
-
-  // Start countdown on load
-  window.onload = startCountdown;
-</script>
+    startBtn.addEventListener("click", startShow);
+  </script>
 </body>
+
 </html>
